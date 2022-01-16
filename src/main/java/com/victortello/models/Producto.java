@@ -21,6 +21,12 @@ public class Producto {
         this.dFechaRegistro = dFechaRegistro;
     }
 
+    @Override
+    public String toString() {
+        return "Producto [cnombre=" + cnombre + ", dFechaRegistro=" + dFechaRegistro + ", id=" + id + ", precio="
+                + precio + "]";
+    }
+
     public Long getId() {
         return id;
     }

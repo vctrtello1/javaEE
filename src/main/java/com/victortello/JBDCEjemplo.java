@@ -14,7 +14,8 @@ public class JBDCEjemplo {
             Connection conn = databaseConnection.getInstance();)
         {            
             Repositorio<Producto>repositorio = new ProductoRepositorioImp();
-            repositorio.Find().forEach(producto -> System.out.println(producto.getCnombre()));
+            repositorio.Find().forEach(System.out::println);
+            System.out.println(repositorio.FindById(2L));
         }
          catch (SQLException e) {
             e.printStackTrace();

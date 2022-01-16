@@ -1,6 +1,7 @@
 package com.victortello.repositories;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -22,11 +23,7 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
         try(Statement statement = getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery("select * from productos") ){
             while(resultSet.next()){
-                Producto producto = new Producto();
-                producto.setId(resultSet.getLong("id"));
-                producto.setCnombre(resultSet.getString("cnombre"));
-                producto.setPrecio(resultSet.getInt("precio"));
-                producto.setdFechaRegistro(resultSet.getDate("dFechaRegistro"));
+                Producto producto = crearProducto(resultSet);
                 productos.add(producto);
             }
             
@@ -39,7 +36,19 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
 
     @Override
     public Producto FindById(Long id) {        
-        return null;
+        Producto producto  = null;
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement("select id, cnombre, precio,dFechaRegistro from productos where id = ?")){
+            preparedStatement.setLong(1, id);
+            ResultSet resultSet = preparedStatement.executeQuery();
+            if(resultSet.next()){
+                producto = crearProducto(resultSet);
+            }
+            resultSet.close();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return producto;
     }
 
     @Override
@@ -51,6 +60,15 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
     @Override
     public void delete(Long id) {        
         
+    }
+
+    private Producto crearProducto(ResultSet resultSet) throws SQLException {
+        Producto producto = new Producto();
+        producto.setId(resultSet.getLong("id"));
+        producto.setCnombre(resultSet.getString("cnombre"));
+        producto.setPrecio(resultSet.getInt("precio"));
+        producto.setdFechaRegistro(resultSet.getDate("dFechaRegistro"));
+        return producto;
     }
     
 }
