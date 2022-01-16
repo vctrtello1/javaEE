@@ -1,6 +1,7 @@
 package com.victortello.repositories;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -39,11 +40,13 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
         Producto producto  = null;
         try(PreparedStatement preparedStatement = getConnection().prepareStatement("select id, cnombre, precio,dFechaRegistro from productos where id = ?")){
             preparedStatement.setLong(1, id);
-            ResultSet resultSet = preparedStatement.executeQuery();
-            if(resultSet.next()){
-                producto = crearProducto(resultSet);
+            
+            try (ResultSet resultSet = preparedStatement.executeQuery()) {
+                if (resultSet.next()) {
+                    producto = crearProducto(resultSet);
+                }                
             }
-            resultSet.close();
+            
         }
         catch (SQLException e) {
             e.printStackTrace();
@@ -52,13 +55,42 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
     }
 
     @Override
-    public void save(Producto t) {
+    public void save(Producto producto) {
+        String sql;
+        if(producto.getId() == 0){
+            sql = "insert into productos(cnombre, precio,dFechaRegistro) values (?,?,?)";
+        }
+        else{
+            sql = "update productos set cnombre =?, precio =?,dFechaRegistro =? where id =?";
+        }
         
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
+            preparedStatement.setString(1, producto.getCnombre());
+            preparedStatement.setInt(2, producto.getPrecio());
+            if(producto.getId() == 0){
+                preparedStatement.setLong(3, producto.getId());
+            }
+            else{
+                preparedStatement.setDate(3, new Date(producto.getdFechaRegistro().getTime()));
+            }
         
+            preparedStatement.executeUpdate();
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }        
     }
 
     @Override
-    public void delete(Long id) {        
+    public void delete(Long id) {
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement("delete from productos where id = ?")) {
+            preparedStatement.setLong(1, id);
+            preparedStatement.executeUpdate();
+
+        }
+        catch (SQLException e) {
+            e.printStackTrace();
+        }
         
     }
 
