@@ -22,7 +22,7 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
     public List<Producto> Find() { 
         List<Producto> productos = new ArrayList<>();     
         try(Statement statement = getConnection().createStatement();
-        ResultSet resultSet = statement.executeQuery("select * from productos") ){
+        ResultSet resultSet = statement.executeQuery("select id, cnombre, iprecio,dFechaRegistro from productos") ){
             while(resultSet.next()){
                 Producto producto = crearProducto(resultSet);
                 productos.add(producto);
@@ -38,7 +38,7 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
     @Override
     public Producto FindById(Long id) {        
         Producto producto  = null;
-        try(PreparedStatement preparedStatement = getConnection().prepareStatement("select id, cnombre, precio,dFechaRegistro from productos where id = ?")){
+        try(PreparedStatement preparedStatement = getConnection().prepareStatement("select id, cnombre, iprecio,dFechaRegistro from productos where id = ?")){
             preparedStatement.setLong(1, id);
             
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -58,15 +58,15 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
     public void save(Producto producto) {
         String sql;
         if(producto.getId() == 0){
-            sql = "insert into productos(cnombre, precio,dFechaRegistro) values (?,?,?)";
+            sql = "insert into productos(cnombre, iprecio,dFechaRegistro) values (?,?,?)";
         }
         else{
-            sql = "update productos set cnombre =?, precio =?,dFechaRegistro =? where id =?";
+            sql = "update productos set cnombre =?, iprecio =?,dFechaRegistro =? where id =?";
         }
         
         try(PreparedStatement preparedStatement = getConnection().prepareStatement(sql)){
             preparedStatement.setString(1, producto.getCnombre());
-            preparedStatement.setInt(2, producto.getPrecio());
+            preparedStatement.setInt(2, producto.getiPrecio());
             if(producto.getId() == 0){
                 preparedStatement.setLong(3, producto.getId());
             }
@@ -98,7 +98,7 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
         Producto producto = new Producto();
         producto.setId(resultSet.getLong("id"));
         producto.setCnombre(resultSet.getString("cnombre"));
-        producto.setPrecio(resultSet.getInt("precio"));
+        producto.setiPrecio(resultSet.getInt("iprecio"));
         producto.setdFechaRegistro(resultSet.getDate("dFechaRegistro"));
         return producto;
     }

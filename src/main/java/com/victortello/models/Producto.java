@@ -6,7 +6,7 @@ public class Producto {
 
     private Long id;
     private String cnombre;
-    private int precio;
+    private int iprecio;
     private Date dFechaRegistro;
 
 
@@ -14,17 +14,17 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(Long id, String cnombre, int precio, Date dFechaRegistro) {
+    public Producto(Long id, String cnombre, int iprecio, Date dFechaRegistro) {
         this.id = id;
         this.cnombre = cnombre;
-        this.precio = precio;
+        this.iprecio = iprecio;
         this.dFechaRegistro = dFechaRegistro;
     }
 
     @Override
     public String toString() {
-        return "Producto [cnombre=" + cnombre + ", dFechaRegistro=" + dFechaRegistro + ", id=" + id + ", precio="
-                + precio + "]";
+        return "Producto [cnombre=" + cnombre + ", dFechaRegistro=" + dFechaRegistro + ", id=" + id + ", iprecio="
+                + iprecio + "]";
     }
 
     public Long getId() {
@@ -39,11 +39,11 @@ public class Producto {
     public void setCnombre(String cnombre) {
         this.cnombre = cnombre;
     }
-    public int getPrecio() {
-        return precio;
+    public int getiPrecio() {
+        return iprecio;
     }
-    public void setPrecio(int precio) {
-        this.precio = precio;
+    public void setiPrecio(int precio) {
+        this.iprecio = precio;
     }
     public Date getdFechaRegistro() {
         return dFechaRegistro;
