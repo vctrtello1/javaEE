@@ -13,17 +13,18 @@ public class Producto {
     public Producto() {
     }
 
-    public Producto(Long id, String cnombre, int iprecio, Date dFechaRegistro) {
+    public Producto(Long id, String cnombre, int iprecio, Date dFechaRegistro, Categoria categoria) {
         this.id = id;
         this.cnombre = cnombre;
         this.iprecio = iprecio;
         this.dFechaRegistro = dFechaRegistro;
+        this.categoria = categoria;
     }
 
     @Override
     public String toString() {
         return "Producto [cnombre=" + cnombre + ", dFechaRegistro=" + dFechaRegistro + ", id=" + id + ", iprecio="
-                + iprecio + "]"  + categoria.getCnombre();
+                + iprecio + "] "  + categoria.getCnombre();
     }
 
     public Long getId() {

@@ -24,7 +24,7 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
         List<Producto> productos = new ArrayList<>();     
         try(Statement statement = getConnection().createStatement();
         ResultSet resultSet = statement.executeQuery("select p.id, p.cnombre, p.iprecio, p.dFechaRegistro, c.id,"
-        +" c.cnombre from productos as p inner join categorias as c on (p.idCategoria = c.id)") ){
+        +" c.cnombre,c.cnombre as categoria from productos as p inner join categorias as c on (p.idCategoria = c.id)") ){
             while(resultSet.next()){
                 Producto producto = crearProducto(resultSet);
                 productos.add(producto);
@@ -41,7 +41,7 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
     public Producto FindById(Long id) {        
         Producto producto  = null;
         try(PreparedStatement preparedStatement = getConnection().prepareStatement("select p.id, p.cnombre, p.iprecio, p.dFechaRegistro, c.id,"
-            +" c.cnombre from productos as p inner join categorias as c on (p.idCategoria = c.id) where p.id = ?")){
+            +" c.cnombre, c.cnombre as categoria from productos as p inner join categorias as c on (p.idCategoria = c.id) where p.id = ?")){
             preparedStatement.setLong(1, id);
             
             try (ResultSet resultSet = preparedStatement.executeQuery()) {
@@ -106,7 +106,7 @@ public class ProductoRepositorioImp implements Repositorio<Producto>{
         producto.setdFechaRegistro(resultSet.getDate("dFechaRegistro"));
         Categoria categoria = new Categoria();
         categoria.setId(resultSet.getLong("id"));
-        categoria.setCnombre(resultSet.getString("cnombre"));
+        categoria.setCnombre(resultSet.getString("categoria"));
         producto.setCategoria(categoria);
         return producto;
     }
