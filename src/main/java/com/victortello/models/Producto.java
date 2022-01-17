@@ -8,9 +8,8 @@ public class Producto {
     private String cnombre;
     private int iprecio;
     private Date dFechaRegistro;
-
-
-    
+    private Categoria categoria;
+  
     public Producto() {
     }
 
@@ -24,7 +23,7 @@ public class Producto {
     @Override
     public String toString() {
         return "Producto [cnombre=" + cnombre + ", dFechaRegistro=" + dFechaRegistro + ", id=" + id + ", iprecio="
-                + iprecio + "]";
+                + iprecio + "]"  + categoria.getCnombre();
     }
 
     public Long getId() {
@@ -39,12 +38,15 @@ public class Producto {
     public void setCnombre(String cnombre) {
         this.cnombre = cnombre;
     }
-    public int getiPrecio() {
+    
+    public int getIprecio() {
         return iprecio;
     }
-    public void setiPrecio(int precio) {
-        this.iprecio = precio;
+
+    public void setIprecio(int iprecio) {
+        this.iprecio = iprecio;
     }
+
     public Date getdFechaRegistro() {
         return dFechaRegistro;
     }
@@ -52,6 +54,12 @@ public class Producto {
         this.dFechaRegistro = dFechaRegistro;
     }
 
-    
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }  
     
 }
