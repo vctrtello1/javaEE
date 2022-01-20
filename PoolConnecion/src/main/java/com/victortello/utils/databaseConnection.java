@@ -10,11 +10,12 @@ public class databaseConnection {
     private static String pass = "linuxx";
     private static Connection connection;
 
-    public static Connection getInstance(){
-        if(connection == null){
+    public static Connection getInstance() {
+        if (connection == null) {
             try {
-                connection = DriverManager.getConnection(url, user, pass);
-            } catch (SQLException e) {                
+                connection = DriverManager.getConnection(url, user, pass);                
+            }
+            catch (SQLException e) {
                 e.printStackTrace();
             }
 
