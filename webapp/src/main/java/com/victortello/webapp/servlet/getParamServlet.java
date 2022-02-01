@@ -34,7 +34,7 @@ public class getParamServlet extends HttpServlet {
 
         out.print("<body>");
         out.print("<h2>$title$</h2>");
-        out.print("<h2>hola" + saludo + "</h2>");
+        out.print("<h2>hola " + saludo + "</h2>");
         out.print("</body>");
         out.print("</html>");
     }
