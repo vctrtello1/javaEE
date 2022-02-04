@@ -12,7 +12,7 @@ import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
-@WebServlet
+@WebServlet("/registro")
 public class formServlet extends HttpServlet {
 
     @Override
@@ -98,7 +98,7 @@ public class formServlet extends HttpServlet {
                 errores.forEach(error -> {
                     out.println("<li>" + error + "</li>");
                 });
-                out.println("<p><a href=\"/webapp-form/index.jsp\">volver</a></p>");
+                
             }
 
             out.println("        </ul>");
